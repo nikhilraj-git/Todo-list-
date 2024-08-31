@@ -40,11 +40,14 @@ body {
   margin-bottom: 10px;
   color: #333;
   text-transform: uppercase;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
 }
 
 .todo-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .todo-item {
@@ -55,6 +58,7 @@ body {
   justify-content: space-between;
   align-items: center;
   background-color: #f7f7f7;
+  border: 1px solid #ddd;
 }
 
 .todo-item:hover {
@@ -93,4 +97,26 @@ body {
 /* Add some animation to the buttons */
 .nav-button:active {
   transform: translateY(2px);
+}
+
+/* Add some media queries to make the website responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .card {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-header {
+    font-size: 1.5rem;
+  }
+  .todo-item {
+    padding: 5px;
+  }
+  .nav-button {
+    padding: 5px;
+  }
 }

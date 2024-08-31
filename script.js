@@ -6,31 +6,43 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", () => {
       const status = button.dataset.status;
       const todoItem = button.parentElement;
-      console.log("todoLists:", todoLists);
-      console.log("status:", status);
-      // Find the target todo list
-      let targetTodoList;
-      todoLists.forEach((list) => {
-        const card = list.parentNode; // get the parent .card element
-        const cardHeader = card.querySelector(".card-header");
-        console.log("cardHeader textContent:", cardHeader.textContent);
+      const currentList = todoItem.parentNode;
+      const currentIndex = Array.prototype.indexOf.call(todoLists, currentList);
 
-        if (
-          cardHeader &&
-          cardHeader.textContent.trim().toLowerCase() === status.toLowerCase()
-        ) {
-          targetTodoList = list;
-        }
-      });
+      let targetIndex;
+      if (status === "backlog") {
+        targetIndex = 0;
+      } else if (status === "todo") {
+        targetIndex = 1;
+      } else if (status === "ongoing") {
+        targetIndex = 2;
+      } else if (status === "done") {
+        targetIndex = 3;
+      }
 
-      if (targetTodoList) {
+      if (status === "backlog" && currentIndex === 1) {
+        targetIndex = 0;
+      } else if (status === "todo" && currentIndex === 0) {
+        targetIndex = 1;
+      } else if (status === "todo" && currentIndex === 2) {
+        targetIndex = 1;
+      } else if (status === "ongoing" && currentIndex === 1) {
+        targetIndex = 2;
+      } else if (status === "ongoing" && currentIndex === 3) {
+        targetIndex = 2;
+      } else if (status === "done" && currentIndex === 2) {
+        targetIndex = 3;
+      }
+
+      if (targetIndex !== currentIndex) {
+        // Remove the todo item from its original list
+        currentList.removeChild(todoItem);
+
         // Move the todo item to the target list
-        targetTodoList.appendChild(todoItem);
+        todoLists[targetIndex].appendChild(todoItem);
 
         // Update button states
         updateButtonStates();
-      } else {
-        console.error(`No target todo list found for status ${status}`);
       }
     });
   });
